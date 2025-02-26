@@ -4,6 +4,7 @@ import NavBar from "./components/NavBar";
 import Account from "./pages/Account"; // Account component
 import Quiz from "./pages/Quiz"; // QuizGenerator component
 import Home from "./pages/Home"; // Optional: Import a Home component
+import QuizResults from "./pages/QuizResults";
 
 function App() {
   return (
@@ -13,6 +14,8 @@ function App() {
         <Route path="/" element={<Home />} /> {/* Home route */}
         <Route path="/account" element={<Account />} /> {/* Account route */}
         <Route path="/quiz" element={<Quiz />} /> {/* Quiz route */}
+        <Route path='/quizResults' element={<QuizResults s/>} />
+
       </Routes>
       <Footer />
     </Router>
