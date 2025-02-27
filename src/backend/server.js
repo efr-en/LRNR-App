@@ -26,6 +26,8 @@ app.use(cors({
 }));
 app.use(express.json())
 
+app.use(express.static(path.join(__dirname, '../../dist')));
+
 const cleanResponseContent = (content) => {
     return content
     .replace(/^```(json)?\n?/, '') // Remove starting ``` or ```json
