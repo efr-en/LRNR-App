@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useLocation } from "react-router-dom";
 
 const h2Heading = "text-left text-4xl mb-4";
 const defaultPadding = "p-4";
@@ -48,7 +47,13 @@ const QuizAnswers = ({ evaluation, explanation, onNext }) => {
   );
 };
 
-const QuizForm = ({ userAnswer, setUserAnswer, handleAnswer, submitting, emptyAnswer }) => {
+const QuizForm = ({
+  userAnswer,
+  setUserAnswer,
+  handleAnswer,
+  submitting,
+  emptyAnswer,
+}) => {
   return (
     <div className="p-4">
       <h2 className="text-left text-4xl mb-4 mt-10">Your Answer</h2>
@@ -67,7 +72,11 @@ const QuizForm = ({ userAnswer, setUserAnswer, handleAnswer, submitting, emptyAn
             disabled={submitting}
           />
         </div>
-        <button disabled={submitting} className="flex-shrink-0 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 text-sm border-4 text-white py-1 px-2 mt-4" type="submit">
+        <button
+          disabled={submitting}
+          className="flex-shrink-0 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 text-sm border-4 text-white py-1 px-2 mt-4"
+          type="submit"
+        >
           Submit Answer
         </button>
       </form>
@@ -76,8 +85,8 @@ const QuizForm = ({ userAnswer, setUserAnswer, handleAnswer, submitting, emptyAn
 };
 
 const QuizQuestions = () => {
-const location = useLocation();
-const questions = location.state?.questions || [];
+  const location = useLocation();
+  const questions = location.state?.questions || [];
 
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [answerOn, setAnswerOn] = useState(false);
@@ -99,33 +108,33 @@ const questions = location.state?.questions || [];
     setSubmitting(true);
 
     try {
-        // Call the evaluation endpoint with the current question and user's answer
-        const response = await fetch(
-          `http://localhost:3000/api/evaluate-answer?question=${encodeURIComponent(
-            questions[currentQuestion].question
-          )}&answer=${encodeURIComponent(userAnswer)}`,
-          {
-            method: "GET",
-          }
-        );
-        const evaluationData = await response.json();
-        // Expecting evaluationData to contain "evaluation" and "explanation" keys
-        setEvaluation(evaluationData.evaluation);
-        setExplanation(evaluationData.explanation);
-        setEmptyAnswer(false);
-        setAnswerOn(true);
-      } catch (error) {
-        console.error("Error evaluating answer:", error);
-      } finally {
-        setSubmitting(false);
-      }
-    };
+      // Call the evaluation endpoint with the current question and user's answer
+      const response = await fetch(
+        `http://localhost:3000/api/evaluate-answer?question=${encodeURIComponent(
+          questions[currentQuestion].question
+        )}&answer=${encodeURIComponent(userAnswer)}`,
+        {
+          method: "GET",
+        }
+      );
+      const evaluationData = await response.json();
+      // Expecting evaluationData to contain "evaluation" and "explanation" keys
+      setEvaluation(evaluationData.evaluation);
+      setExplanation(evaluationData.explanation);
+      setEmptyAnswer(false);
+      setAnswerOn(true);
+    } catch (error) {
+      console.error("Error evaluating answer:", error);
+    } finally {
+      setSubmitting(false);
+    }
+  };
 
   const handleNextQuestion = () => {
     if (currentQuestion < questions.length - 1) {
       setCurrentQuestion((prev) => prev + 1);
       setAnswerOn(false);
-      setUserAnswer("")
+      setUserAnswer("");
       setEvaluation("");
       setExplanation("");
       setEmptyAnswer(false);
@@ -137,12 +146,20 @@ const questions = location.state?.questions || [];
 
   if (quizCompleted) {
     return (
-      <div className={defaultPadding}>
-        <h1 className="text-center text-5xl p-8">Quiz Completed!</h1>
-      </div>
+      <>
+        <div className={defaultPadding}>
+          <h1 className="text-center text-5xl p-8">Quiz Completed!</h1>
+        </div>
+        <div className="flex justify-center mt-6">
+          <Link to="/quiz-results">
+            <button className="bg-teal-500 hover:bg-teal-600 text-white font-medium py-2 px-6 rounded transition-colors">
+              Check your results
+            </button>
+          </Link>
+        </div>
+      </>
     );
   }
-
 
   return (
     <>
