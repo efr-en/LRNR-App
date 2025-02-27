@@ -98,10 +98,16 @@ app.get('/api/evaluate-answer', async (req, res) => {
     }
 });
 
-app.get('/' , (req, res) => {
-    res.send('Welcome to the LRNR App!');
+app.get('*' , (req, res) => {
+    res.sendFile(path.join(distPath, 'index.html'));
 });
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 });
+
+
+// Old Code
+// app.get('/' , (req, res) => {
+//     res.send('Welcome to the LRNR App!');
+// });
