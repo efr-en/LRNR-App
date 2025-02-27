@@ -118,7 +118,7 @@ const questions = location.state?.questions || [];
       } catch (error) {
         console.error("Error evaluating answer:", error);
       } finally {
-        setSubmitting(false);
+        setSubmitting(true);
       }
     };
 
@@ -155,7 +155,7 @@ const questions = location.state?.questions || [];
 
 
   return (
-    <>
+    <div className="min-h-screen flex flex-col">
       <h1 className="text-center text-5xl p-8">
         {currentQuestion + 1} of {questions.length}
       </h1>
@@ -179,7 +179,7 @@ const questions = location.state?.questions || [];
           onNext={handleNextQuestion}
         />
       )}
-    </>
+    </div>
   );
 };
 
